@@ -1,0 +1,199 @@
+{
+    "version": 1,
+    "name": "New Actions",
+    "maps": [
+        {
+            "name": "InputContro",
+            "id": "aa5a8b4e-2d59-4c10-b595-49b2ee7c9084",
+            "actions": [
+                {
+                    "name": "LeftJump",
+                    "type": "Button",
+                    "id": "7ec416e8-6d95-4570-b946-7bb13f1e9c3f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightJump",
+                    "type": "Button",
+                    "id": "aca540ea-94c6-48e1-866f-8004684ba503",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LeftMove",
+                    "type": "Button",
+                    "id": "44ca5dc6-1569-4506-8040-9f2f5e9988e0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightMove",
+                    "type": "Button",
+                    "id": "744becea-8dd8-45d5-8778-dd85a75ceca5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "0f38f8d8-0ec9-47d5-ba4c-7a9a56ba4d5b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FastMove",
+                    "type": "Button",
+                    "id": "baeb87ed-76ab-47c7-8f38-49bbcd6fb1aa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Boost",
+                    "type": "Button",
+                    "id": "8c139a8a-a253-489a-b800-58701743472b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c7df18e0-1355-4a54-becb-073169abbc87",
+                    "path": "<Keyboard>/j",
+                    "interactions": "Hold(duration=0.025,pressPoint=0.025)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0defbde7-60a2-491c-8679-2224bb8d7c07",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FastMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b4cdad5-bb62-4646-b404-e6bf56142e63",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Boost",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "d6ae2b77-5724-4eaf-b8bf-b6daaee19eda",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftJump",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "9c4cac22-d7c9-4ec1-8130-2f2d2099299d",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftJump",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "8ac55d94-90ad-41bb-9b55-f343a2920bc3",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftJump",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "e00a93fe-5eac-40b1-9372-319452c0c233",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightJump",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "f8d31e2c-fafb-490c-be37-0905ec693dcc",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightJump",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "aded8fac-4ee7-46a1-b158-258e5531aa81",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightJump",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b6bed4b0-0cd9-49cc-b85d-ef3ad07352cb",
+                    "path": "<Keyboard>/a",
+                    "interactions": "Hold(duration=0.025,pressPoint=0.025)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc44abcd-f5cf-4176-b4a6-3702c5ba13a3",
+                    "path": "<Keyboard>/d",
+                    "interactions": "Hold(duration=0.025,pressPoint=0.025)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
