@@ -95,6 +95,11 @@ public class PlayerController : MonoBehaviour
     public void OnRest()
     {
         if (dizzard) dizzard.SetActive(false);
+        if (animator)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
         moveVec = Vector3.zero;
         currentSpeed = 0;
         pLState = PLState.Idel;

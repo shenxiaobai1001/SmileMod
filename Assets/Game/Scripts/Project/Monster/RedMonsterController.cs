@@ -223,7 +223,9 @@ public class RedMonsterController : MonsterBase
     {
         if (!isLive || !isPatrol) return;
         speedTimer = 10;
-        isSpeedBoosted = true;
+        currentSpeed = moveSpeed;
+        speedTimer = normalSpeedDuration;
+        isSpeedBoosted = false;
         // 设置本地位置
         transform.localPosition = localPosition;
 
