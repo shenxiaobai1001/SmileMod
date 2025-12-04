@@ -66,6 +66,7 @@ public class GameController : MonoBehaviour
         }
         PFunc.Log("ÐÞ¸Ä¹Ø¿¨", gameLevel);
         PlayerController.Instance.OnSetStickCheck(gameLevel != 1&& gameLevel != 2 && gameLevel != 3);
+       // PlayerController.Instance.OnSetStickCheck(true);
         EventManager.Instance.SendMessage(Events.MapChanged);
     }
 

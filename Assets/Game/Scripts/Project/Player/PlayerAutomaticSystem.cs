@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using Unity.Burst.CompilerServices;
 using UnityEditor;
 using UnityEngine;
+using static TreeEditor.TreeEditorHelper;
 
 public class PlayerAutomaticSystem : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class PlayerAutomaticSystem : MonoBehaviour
     private Dictionary<string, AutomaticPoint> dicAutomaticPoints = new Dictionary<string, AutomaticPoint>();
     private Coroutine automaticCoroutine;
     public PlayerCheckGround playerCheckGround;
+    public PlayerCheckGround playerCheckRight;
+    public PlayerCheckGround playerCheckLeft;
     private PlayerControState currentMoveType = PlayerControState.LRun;
 
     private void Awake()
@@ -81,10 +85,9 @@ public class PlayerAutomaticSystem : MonoBehaviour
             if (automaticPoints.Count > 0 && hasAutoMaticPoint)
             {
                 AutomaticPoint point = automaticPoints.Dequeue();
-                dicAutomaticPoints.Remove(point.index);
 
                 // 检查玩家位置是否超过了readyPosObj>去到适合执行命令的点
-                if (point.readyPosObj != null && IsPlayerBeyondReadyPosition(point))
+                if (point.readyPosObj != null && IsPlayerBeyondReadyPosition(point)&& point.needCheckReady)
                 {
                     PFunc.Log("玩家位置超过准备点，执行折返逻辑");
                     // 先控制玩家回到准备位置
@@ -92,9 +95,7 @@ public class PlayerAutomaticSystem : MonoBehaviour
                     currentMoveType = PlayerControState.CanelLRun;
                     yield return ExecuteMoveInstruction(currentMoveType);
                 }
-                //继续前进
-                currentMoveType = PlayerControState.RRun;
-                yield return ExecuteMoveInstruction(currentMoveType);
+                //重置怪物和齿轮位置方便通过
                 if (point.redMonsterSetting.Count > 0)
                 {
                     for (int i = 0; i < point.redMonsterSetting.Count; i++) {
@@ -110,24 +111,66 @@ public class PlayerAutomaticSystem : MonoBehaviour
                         sawwerr.sawwer.SetSawLocalPosition(sawwerr.restPos, sawwerr.moveToPoint2);
                     }
                 }
+
+                if (point.fixTurretSetting.Count > 0)
+                {
+                    for (int i = 0; i < point.fixTurretSetting.Count; i++)
+                    {
+                        var ffixTurret = point.fixTurretSetting[i];
+                        ffixTurret.fixTurret.OnSetWaitTime(ffixTurret.waitTime);
+                    }
+                }
+
+                bool order = true;
                 //开始执行命令节点
-                if (point.automaticMoveType.Count>0)
+                if (point.automaticMoveType.Count>0&& order)
                 {
                     for (int i = 0; i < point.automaticMoveType.Count; i++)
                     {
-                        var  MoveType = point.automaticMoveType[i].automaticMoveType;
-                        if(MoveType!= currentMoveType)
+                        var MoveType = point.automaticMoveType[i].automaticMoveType;
+                        PFunc.Log("automaticMoveType", point.index, MoveType, currentMoveType);
+                        if (MoveType == PlayerControState.Jump || MoveType != currentMoveType)
                         {
                             currentMoveType = MoveType;
-                            PFunc.Log("OnPlayerControStateChange", currentMoveType);
                             yield return ExecuteMoveInstruction(currentMoveType);
+
                             if (point.automaticMoveType[i].waitTime != 0)
                                 yield return new WaitForSeconds(point.automaticMoveType[i].waitTime);
+
+                            if (point.targetPos != Vector3.zero)
+                            {
+                                float y = point.targetPos.y;
+                                PFunc.Log(transform.position.y, y);
+                                if (transform.position.y >= y)
+                                {
+                                    order = false;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
+
+                if (point.automaticMoveType2.Count > 0 && !order)
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    for (int i = 0; i < point.automaticMoveType2.Count; i++)
+                    {
+                        var MoveType = point.automaticMoveType2[i].automaticMoveType;
+                        PFunc.Log("automaticMoveType2", point.index, MoveType, currentMoveType);
+                        if (MoveType != currentMoveType)
+                        {
+                            currentMoveType = MoveType;
+                            yield return ExecuteMoveInstruction(currentMoveType);
+                            if (point.automaticMoveType2[i].waitTime != 0)
+                                yield return new WaitForSeconds(point.automaticMoveType2[i].waitTime);
+                        }
+                    }
+                }
+                PFunc.Log("Point结束", point.index, currentMoveType);
                 MaticSucc = false;
                 needEndIndex = point.index;
+                dicAutomaticPoints.Remove(point.index);
                 if (point.needEnd)
                     yield return new WaitUntil(() => MaticSucc == true);
             }
@@ -140,7 +183,6 @@ public class PlayerAutomaticSystem : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
                 yield return new WaitUntil(() => hasAutoMaticPoint == true);
             }
-
             yield return null;
         }
     }
@@ -243,10 +285,17 @@ public class PlayerAutomaticSystem : MonoBehaviour
                 playerController.OnPlayerControStateChange(PlayerControState.CancelFast);
                 break;
             case PlayerControState.Jump:
-                yield return new WaitUntil(() => playerCheckGround.isGround);
+
+                yield return new WaitUntil(() => playerCheckGround.isGround
+                                                        || playerCheckRight.isGround 
+                                                        || playerCheckLeft.isGround);
                 yield return new WaitUntil(() => playerController.pLState == PLState.Idel 
-                || playerController.pLState == PLState.RRun
-                 || playerController.pLState == PLState.FastRRun);
+                                                        || playerController.pLState == PLState.RRun
+                                                          || playerController.pLState == PLState.LRun
+                                                         || playerController.pLState == PLState.FastRRun
+                                                          || playerController.pLState == PLState.Stick
+                                                          || playerController.pLState == PLState.LStick 
+                                                          || playerController.pLState == PLState.RStick);
                 playerController.OnPlayerControStateChange(PlayerControState.Jump);
                 break;
             case PlayerControState.Jumping:

@@ -9,10 +9,14 @@ public class AutomaticPoint : MonoBehaviour
     public string index;
     public bool needEnd = true;
     public bool start;
+    public bool needCheckReady = true;
     public GameObject readyPosObj;
+    public Vector3 targetPos;
     public List<AutomaticVideo> automaticMoveType;
+    public List<AutomaticVideo> automaticMoveType2;
     public List<RedMonsterSetting> redMonsterSetting;
     public List<SawwerSetting> sawwerSetting;
+    public List<FixTurretSetting> fixTurretSetting;
 }
 
 [Serializable]
@@ -36,4 +40,11 @@ public class SawwerSetting
     public bool moveToPoint2;
     public Vector3 restPos;
     public Sawwer sawwer;
+}
+
+[Serializable]
+public class FixTurretSetting
+{
+    public float waitTime;
+    public FixTurret fixTurret;
 }

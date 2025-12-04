@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -129,31 +125,6 @@ public class PlayerController : MonoBehaviour
         }
         if (GameController.Instance.isAutomatic) return;
         if (isHit) return;
-   
-        //if (Input.GetKey(KeyCode.D))
-        //{
-        //    OnPlayerControStateChange(PlayerControState.RRuning);
-        //}
-        //if (Input.GetKeyUp(KeyCode.D))
-        //{
-        //    dPressed = false;
-        //    OnPlayerControStateChange(PlayerControState.CanelRRun);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    aPressed = true;
-        //}
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //    OnPlayerControStateChange(PlayerControState.LRuning);
-        //}
-
-        //if (Input.GetKeyUp(KeyCode.A))
-        //{
-        //    aPressed = false;
-        //    OnPlayerControStateChange(PlayerControState.CanelLRun);
-        //}
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -169,49 +140,6 @@ public class PlayerController : MonoBehaviour
         {
             OnPlayerControStateChange(PlayerControState.CancelFast);
         }
-
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    OnPlayerControStateChange(PlayerControState.Boost);
-        //}
-
-        //if (Input.GetKeyUp(KeyCode.K))
-        //{
-        //    OnPlayerControStateChange(PlayerControState.CanelBoost);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.J))
-        //{
-        //    jPressed = true;
-        //}
-        //if (Input.GetKey(KeyCode.J))
-        //{
-        //    OnPlayerControStateChange(PlayerControState.Jumping);
-        //}
-        //if (Input.GetKeyUp(KeyCode.J))
-        //{
-        //    jPressed = false;
-        //    OnPlayerControStateChange(PlayerControState.CJump);
-        //}
-
-        //if (jPressed)
-        // {
-        //     //PFunc.Log("µ•∂¿Ã¯‘æ");
-        //     OnPlayerControStateChange(PlayerControState.Jump);
-        //     jPressed=false;
-        // }
-        //else if (aPressed)
-        //{
-        //    //PFunc.Log("µ•∂¿◊Û“∆");
-        //    OnPlayerControStateChange(PlayerControState.LRun);
-        //    aPressed=false;
-        //}
-        //else if (dPressed)
-        //{
-        //    //PFunc.Log("µ•∂¿”““∆");
-        //    OnPlayerControStateChange(PlayerControState.RRun);
-        //    dPressed = false;
-        //}
     }
 
     public void OnPlayerControStateChange(PlayerControState nplayerCState)
@@ -894,7 +822,6 @@ public class PlayerController : MonoBehaviour
                         rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                         boostImageContro.StartRecovery();
                         break;
-
                 }
              break;
         }
@@ -941,7 +868,7 @@ public class PlayerController : MonoBehaviour
     {
         if (oldState != pLState)
         {
-           // PFunc.Log(pLState,moveVec,currentSpeed,JumpHeight);
+            //PFunc.Log(pLState,moveVec,currentSpeed,JumpHeight);
             oldState = pLState;
         }
         switch (pLState)
@@ -1089,7 +1016,6 @@ public class PlayerController : MonoBehaviour
                     pLState = playerCheckLeft.isGround? PLState.LStick: PLState.RStick;
                     int x = pLState == PLState.LStick ? -1 : 1;
                     spriteTrans.localScale = new Vector3(x,1,1);
-                    PFunc.Log("pLState = PLState.LStick");
                 }
                 break;
             case PLState.LJumping:
@@ -1106,7 +1032,6 @@ public class PlayerController : MonoBehaviour
                         animator.SetBool("Stick", true);
                     }
                     pLState = PLState.LStick;
-                    PFunc.Log("pLState = PLState.LStick");
                 }
                 break;
             case PLState.RJumping:
@@ -1139,7 +1064,6 @@ public class PlayerController : MonoBehaviour
                         animator.SetBool("Stick", true);
                     }
                     pLState = PLState.LStick;
-                    PFunc.Log("pLState = PLState.LStick");
                 }
                 break;
             case PLState.FRDroping:
@@ -1172,7 +1096,6 @@ public class PlayerController : MonoBehaviour
                         animator.SetBool("Stick", true);
                     }
                     pLState = PLState.LStick;
-                    PFunc.Log("pLState = PLState.LStick");
                     boostImageContro.StartRecovery();
                 }
                 break;
