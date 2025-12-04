@@ -153,6 +153,8 @@ public class PlayerAutomaticSystem : MonoBehaviour
 
                 if (point.automaticMoveType2.Count > 0 && !order)
                 {
+                    float y = point.targetPos.y;
+                    yield return new WaitUntil(() => transform.position.y <= y);
                     yield return new WaitForSeconds(0.5f);
                     for (int i = 0; i < point.automaticMoveType2.Count; i++)
                     {

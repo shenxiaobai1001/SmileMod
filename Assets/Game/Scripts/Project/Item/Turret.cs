@@ -73,10 +73,12 @@ public class Turret : MonoBehaviour
 
     public void OnSetData(Vector3 movingVec, float currentSpeed, float moveEndDistance = 10f)
     {
+  
         this.movingVec = movingVec.normalized; // 确保方向向量标准化
         this.currentSpeed = currentSpeed;
         this.moveEnd = moveEndDistance;
         this.startPosition = transform.position; // 重置起始位置
+        if(circleCollider) circleCollider.enabled = true;
         isRun = true;
     }
 
