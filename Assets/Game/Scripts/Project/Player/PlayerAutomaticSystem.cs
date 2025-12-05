@@ -136,21 +136,19 @@ public class PlayerAutomaticSystem : MonoBehaviour
 
                             if (point.automaticMoveType[i].waitTime != 0)
                                 yield return new WaitForSeconds(point.automaticMoveType[i].waitTime);
-
-                            if (point.targetPos != Vector3.zero)
+                        }
+                        if (point.targetPos != Vector3.zero)
+                        {
+                            float y = point.targetPos.y;
+                            PFunc.Log(transform.position.y, y);
+                            if (transform.position.y >= y)
                             {
-                                float y = point.targetPos.y;
-                                PFunc.Log(transform.position.y, y);
-                                if (transform.position.y >= y)
-                                {
-                                    order = false;
-                                    break;
-                                }
+                                order = false;
+                                break;
                             }
                         }
                     }
                 }
-
                 if (point.automaticMoveType2.Count > 0 && !order)
                 {
                     float y = point.targetPos.y;
@@ -159,7 +157,6 @@ public class PlayerAutomaticSystem : MonoBehaviour
                     for (int i = 0; i < point.automaticMoveType2.Count; i++)
                     {
                         var MoveType = point.automaticMoveType2[i].automaticMoveType;
-                        PFunc.Log("automaticMoveType2", point.index, MoveType, currentMoveType);
                         if (MoveType != currentMoveType)
                         {
                             currentMoveType = MoveType;
